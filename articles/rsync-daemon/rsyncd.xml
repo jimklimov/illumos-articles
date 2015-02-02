@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type="manifest" name="rsyncd">
+  <service
+     name="network/rsyncd"
+     type="service"
+     version="1">
+    <single_instance/>
+    
+    <dependency
+       name="fs"
+       grouping="require_all"
+       restart_on="none"
+       type="service">
+      <service_fmri value="svc:/system/filesystem/local"/>
+    </dependency>
+    
+    <dependency
+       name="net"
+       grouping="require_all"
+       restart_on="none"
+       type="service">
+      <service_fmri value="svc:/network/loopback"/>
+    </dependency>
+
+    <dependency name='config_data'
+      grouping='require_all'
+      restart_on='restart'
+      type='path'>
+      <service_fmri value="file://localhost/etc/rsyncd.conf"/>
+      <service_fmri value="file://localhost/etc/default/rsync"/>
+    </dependency>
+
+    <method_context>
+	<method_credential user="root" group="root"/>
+      </method_context>
+
+   <exec_method
+      type='method'
+      name='start'
+      exec='/lib/svc/method/rsyncd %m'
+      timeout_seconds='15'>
+    </exec_method>
+         
+     <exec_method
+      type='method'
+      name='restart'
+      exec='/lib/svc/method/rsyncd %m'
+      timeout_seconds='15'>
+    </exec_method>
+
+    <exec_method
+      type='method'
+      name='stop'
+      exec='/lib/svc/method/rsyncd %m'
+      timeout_seconds='15' >
+    </exec_method>
+    
+    <instance name="default" enabled="true"/>
+    
+    <stability value="Evolving"/>
+    
+    <template>
+      <common_name>
+        <loctext xml:lang="C">
+          rsync daemon
+        </loctext>
+      </common_name>
+      
+    <documentation>
+        <manpage title="rsyncd.conf" section="5" manpath="/usr/share/man"/>
+      </documentation>
+    </template>
+  </service>
+</service_bundle>
