@@ -8,5 +8,9 @@ For practical code that appeared from some of these articles, please see:
 * https://github.com/jimklimov/illumos-smf-zfspools
 * https://github.com/jimklimov/illumos-smf-zones
 
+...and loosely related by general theme:
+
+* https://github.com/jimklimov/vboxsvc
+
 Jim Klimov
 
